@@ -1,0 +1,56 @@
+package com.crud.kodillalibrary.controller;
+
+        import com.crud.kodillalibrary.domain.UserDto;
+        import com.crud.kodillalibrary.mapper.UserMapper;
+        import com.crud.kodillalibrary.service.DbService;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.web.bind.annotation.*;
+
+        import java.util.List;
+
+        import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+@RestController
+@RequestMapping("/v1/library")
+@CrossOrigin(origins = "*")
+public class TaskController {
+    @Autowired
+    private DbService service;
+    @Autowired
+    private UserMapper userMapper;
+
+    @RequestMapping(method = RequestMethod.GET, value = "getUsers")
+    public List<UserDto> getUsers() {
+        return userMapper.mapToUserDtoList(service.getAllUsers());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getUserById")
+    public UserDto getUserById(Long userId) throws UserNotFoundException {
+        return userMapper.mapToUserDto(service.getUserById(userId).orElseThrow(UserNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getUser")
+    public UserDto getUser(@RequestParam Long userId) throws UserNotFoundException {
+        return userMapper.mapToUserDto(service.getUser(userId).orElseThrow(UserNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteUser")
+    public void deleteUser(@RequestParam Long userId) throws UserNotFoundException {
+        if (service.getUser(userId).isPresent()) {
+            service.deleteById(userId);
+        } else {
+            throw new UserNotFoundException("Error with delete User");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "updateUser")
+    public UserDto updateUser(@RequestBody UserDto UserDto) {
+        return userMapper.mapToUserDto(service.saveUser(userMapper.mapToUser(UserDto)));
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "createUser", consumes = APPLICATION_JSON_VALUE)
+    public void createUser(@RequestBody UserDto UserDto) {
+        service.saveUser(userMapper.mapToUser(UserDto));
+    }
+}
+
