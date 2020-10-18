@@ -16,9 +16,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long title_id;
+    private Long title_id;*/
 
     @Column(name = "status")
     private String status;
