@@ -1,5 +1,7 @@
 package com.crud.kodillalibrary.controller;
+import com.crud.kodillalibrary.domain.TitleDto;
 import com.crud.kodillalibrary.domain.UserDto;
+import com.crud.kodillalibrary.mapper.TitleMapper;
 import com.crud.kodillalibrary.mapper.UserMapper;
 import com.crud.kodillalibrary.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,10 @@ public class LibraryController {
     private DbService service;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private TitleMapper titleMapper;
 
+    //users
     @RequestMapping(method = RequestMethod.GET, value = "getUsers")
     public List<UserDto> getUsers() {
         return userMapper.mapToUserDtoList(service.getAllUsers());
@@ -35,7 +40,7 @@ public class LibraryController {
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteUser")
     public void deleteUser(@RequestParam Long userId) throws UserNotFoundException {
         if (service.getUser(userId).isPresent()) {
-            service.deleteById(userId);
+            service.deleteUserById(userId);
         } else {
             throw new UserNotFoundException("Error with delete User");
         }
@@ -49,6 +54,41 @@ public class LibraryController {
     @RequestMapping(method = RequestMethod.POST, value = "createUser", consumes = APPLICATION_JSON_VALUE)
     public void createUser(@RequestBody UserDto UserDto) {
         service.saveUser(userMapper.mapToUser(UserDto));
+    }
+    
+    //titles
+    @RequestMapping(method = RequestMethod.GET, value = "getTitles")
+    public List<TitleDto> getTitles() {
+        return titleMapper.mapToTitleDtoList(service.getAllTitles());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getTitleById")
+    public TitleDto getTitleById(Long TitleId) throws TitleNotFoundException {
+        return titleMapper.mapToTitleDto(service.getTitleById(TitleId).orElseThrow(TitleNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getTitle")
+    public TitleDto getTitle(@RequestParam Long TitleId) throws TitleNotFoundException {
+        return titleMapper.mapToTitleDto(service.getTitle(TitleId).orElseThrow(TitleNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteTitle")
+    public void deleteTitle(@RequestParam Long TitleId) throws TitleNotFoundException {
+        if (service.getTitle(TitleId).isPresent()) {
+            service.deleteTitleById(TitleId);
+        } else {
+            throw new TitleNotFoundException("Error with delete Title");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "updateTitle")
+    public TitleDto updateTitle(@RequestBody TitleDto TitleDto) {
+        return titleMapper.mapToTitleDto(service.saveTitle(titleMapper.mapToTitle(TitleDto)));
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "createTitle", consumes = APPLICATION_JSON_VALUE)
+    public void createTitle(@RequestBody TitleDto TitleDto) {
+        service.saveTitle(titleMapper.mapToTitle(TitleDto));
     }
 }
 
