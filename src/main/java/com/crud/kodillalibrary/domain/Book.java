@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,9 +29,7 @@ public class Book {
     )
     List<Title> titleList = new ArrayList<>();
 
-    @Column(name = "title")
-    private Title title;
-
+    @Column(name = "titleId")
     private Long titleId;
 
     public Long getId() {
@@ -51,14 +50,9 @@ public class Book {
     public void setTitleList(List<Title> titleList) {
         this.titleList = titleList;
     }
-    public Title getTitle() {
-        return title;
-    }
-    public void setTitle(Title title) {
-        this.title = title;
-    }
+
     public Long getTitleId() {
-        return title.getId();
+        return titleId;
     }
     public void setTitleId(Long titleId) {
         this.titleId = titleId;

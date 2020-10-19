@@ -10,20 +10,12 @@ import javax.persistence.Id;
 
 
 public class BookDto {
-    private Title title;
     private Long titleId;
     private String status;
 
-    public Title getTitle() {
-        return title;
-    }
-
-    public void setTitle(Title title) {
-        this.title = title;
-    }
 
     public Long getTitleId() {
-        return title.getId();
+        return titleId;
     }
 
     public void setTitleId(Long titleId) {
