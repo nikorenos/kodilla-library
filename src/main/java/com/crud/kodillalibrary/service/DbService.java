@@ -1,8 +1,10 @@
 package com.crud.kodillalibrary.service;
 
 
+import com.crud.kodillalibrary.domain.Book;
 import com.crud.kodillalibrary.domain.Title;
 import com.crud.kodillalibrary.domain.User;
+import com.crud.kodillalibrary.repository.BookRepository;
 import com.crud.kodillalibrary.repository.TitleRepository;
 import com.crud.kodillalibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class DbService {
     private UserRepository userRepository;
     @Autowired
     private TitleRepository titleRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     //Users
     public List<User> getAllUsers() {
@@ -57,6 +61,26 @@ public class DbService {
 
     public void deleteTitleById(final Long titleId) {
         titleRepository.deleteById(titleId);
+    }
+
+    //Books
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
+
+    public Optional<Book> getBookById(final Long bookId) {
+        return bookRepository.findById(bookId);
+    }
+    public Book saveBook(final Book Book) {
+        return bookRepository.save(Book);
+    }
+
+    public Optional<Book> getBook(final Long BookId) {
+        return bookRepository.findById(BookId);
+    }
+
+    public void deleteBookById(final Long BookId) {
+        bookRepository.deleteById(BookId);
     }
 }
 

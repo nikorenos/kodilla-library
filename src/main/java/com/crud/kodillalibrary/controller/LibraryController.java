@@ -1,6 +1,8 @@
 package com.crud.kodillalibrary.controller;
+import com.crud.kodillalibrary.domain.BookDto;
 import com.crud.kodillalibrary.domain.TitleDto;
 import com.crud.kodillalibrary.domain.UserDto;
+import com.crud.kodillalibrary.mapper.BookMapper;
 import com.crud.kodillalibrary.mapper.TitleMapper;
 import com.crud.kodillalibrary.mapper.UserMapper;
 import com.crud.kodillalibrary.service.DbService;
@@ -20,6 +22,8 @@ public class LibraryController {
     private UserMapper userMapper;
     @Autowired
     private TitleMapper titleMapper;
+    @Autowired
+    private BookMapper bookMapper;
 
     //users
     @RequestMapping(method = RequestMethod.GET, value = "getUsers")
@@ -89,6 +93,41 @@ public class LibraryController {
     @RequestMapping(method = RequestMethod.POST, value = "createTitle", consumes = APPLICATION_JSON_VALUE)
     public void createTitle(@RequestBody TitleDto TitleDto) {
         service.saveTitle(titleMapper.mapToTitle(TitleDto));
+    }
+
+    //books
+    @RequestMapping(method = RequestMethod.GET, value = "getBooks")
+    public List<BookDto> getBooks() {
+        return bookMapper.mapToBookDtoList(service.getAllBooks());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getBookById")
+    public BookDto getBookById(Long BookId) throws BookNotFoundException {
+        return bookMapper.mapToBookDto(service.getBookById(BookId).orElseThrow(BookNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getBook")
+    public BookDto getBook(@RequestParam Long BookId) throws BookNotFoundException {
+        return bookMapper.mapToBookDto(service.getBook(BookId).orElseThrow(BookNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBook")
+    public void deleteBook(@RequestParam Long BookId) throws BookNotFoundException {
+        if (service.getBook(BookId).isPresent()) {
+            service.deleteBookById(BookId);
+        } else {
+            throw new BookNotFoundException("Error with delete Book");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "updateBook")
+    public BookDto updateBook(@RequestBody BookDto BookDto) {
+        return bookMapper.mapToBookDto(service.saveBook(bookMapper.mapToBook(BookDto)));
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "createBook", consumes = APPLICATION_JSON_VALUE)
+    public void createBook(@RequestBody BookDto BookDto) {
+        service.saveBook(bookMapper.mapToBook(BookDto));
     }
 }
 
