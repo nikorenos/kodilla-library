@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 public class BookMapper {
     public Book mapToBook(final BookDto bookDto) {
         return new Book(
-                bookDto.getId(),
+                bookDto.getTitle().getId(),
                 bookDto.getStatus());
     }
 
     public BookDto mapToBookDto(final Book book) {
         return new BookDto(
-                book.getId(),
+                book.getTitle().getId(),
                 book.getStatus());
     }
 
     public List<BookDto> mapToBookDtoList(final List<Book> bookList) {
         return bookList.stream()
-                .map(t -> new BookDto(t.getId(), t.getStatus()))
+                .map(t -> new BookDto(t.getTitle().getId(), t.getStatus()))
                 .collect(Collectors.toList());
     }
 }

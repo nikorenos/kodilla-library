@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class TitleMapper {
     public Title mapToTitle(final TitleDto titleDto) {
         return new Title(
-                titleDto.getId(),
                 titleDto.getBookTitle(),
                 titleDto.getAuthor(),
                 titleDto.getPublicationYear());
@@ -20,7 +19,6 @@ public class TitleMapper {
 
     public TitleDto mapToTitleDto(final Title title) {
         return new TitleDto(
-                title.getId(),
                 title.getBookTitle(),
                 title.getAuthor(),
                 title.getPublicationYear());
@@ -28,7 +26,7 @@ public class TitleMapper {
 
     public List<TitleDto> mapToTitleDtoList(final List<Title> TitleList) {
         return TitleList.stream()
-                .map(t -> new TitleDto(t.getId(), t.getBookTitle(), t.getAuthor(), t.getPublicationYear()))
+                .map(t -> new TitleDto(t.getBookTitle(), t.getAuthor(), t.getPublicationYear()))
                 .collect(Collectors.toList());
     }
 }

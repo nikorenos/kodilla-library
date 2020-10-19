@@ -1,9 +1,11 @@
 package com.crud.kodillalibrary.domain;
 
+import com.crud.kodillalibrary.service.DbService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,17 +30,12 @@ public class Title {
     @Column(name = "publicationYear")
     private int publicationYear;
 
-    @OneToMany(
-            targetEntity = Book.class,
-            mappedBy = "title",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    List<Book> booksList = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "BOOK_ID")
+    private Book book;
 
 
-    public Title(Long id, String bookTitle, String author, int publicationYear) {
-        this.id = id;
+    public Title(String bookTitle, String author, int publicationYear) {
         this.bookTitle = bookTitle;
         this.author = author;
         this.publicationYear = publicationYear;

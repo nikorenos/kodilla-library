@@ -8,10 +8,38 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Getter
-@AllArgsConstructor
+
 public class BookDto {
-    private Long id;
+    private Title title;
+    private Long titleId;
     private String status;
 
+    public Title getTitle() {
+        return title;
+    }
+
+    public void setTitle(Title title) {
+        this.title = title;
+    }
+
+    public Long getTitleId() {
+        return title.getId();
+    }
+
+    public void setTitleId(Long titleId) {
+        this.titleId = titleId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public BookDto(Long titleId, String status) {
+        this.titleId = titleId;
+        this.status = status;
+    }
 }
