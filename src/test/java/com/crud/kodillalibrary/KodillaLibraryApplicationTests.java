@@ -1,6 +1,7 @@
 package com.crud.kodillalibrary;
 
 import com.crud.kodillalibrary.domain.Book;
+import com.crud.kodillalibrary.domain.Borrow;
 import com.crud.kodillalibrary.domain.Title;
 import com.crud.kodillalibrary.domain.User;
 import com.crud.kodillalibrary.service.DbService;
@@ -45,8 +46,9 @@ public class KodillaLibraryApplicationTests {
     @Test
     public void testLibrarySave() {
         //Given
-        LocalDate date = LocalDate.now();
-        User user1 = new User(1l, "John","Smith",date);
+        LocalDate date1 = LocalDate.now();
+        LocalDate date2 = LocalDate.now().plusDays(7);
+        User user1 = new User("John","Smith",date1);
         Title title1 = new Title("Book1", "Author 1", 1981);
 
         Book book1 = new Book ("Borrowed");
@@ -57,6 +59,12 @@ public class KodillaLibraryApplicationTests {
 
         book1.setTitle(title1);
         book2.setTitle(title1);
+
+        Borrow borrow1 = new Borrow(date1, date2);
+        borrow1.setBook(new Book("Free"));
+        borrow1.getBook().setTitle(title1);
+        borrow1.setUser(new User("Henry","Cavil",date1));
+
 
         //System.out.println(title1);
 
@@ -70,8 +78,9 @@ public class KodillaLibraryApplicationTests {
         item3.setInvoice(invoice);*/
 
         //When
-        service.saveUser(user1);
         service.saveTitle(title1);
+        service.saveBorrow(borrow1);
+
         //service.saveBook(book1);
         //service.saveBook(book2);
         //Long id = title1.getId();

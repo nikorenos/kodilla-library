@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -26,4 +25,10 @@ public class User {
 
     @Column(name = "accountCreated")
     private LocalDate accountCreated;
+
+    public User(String name, String surname, LocalDate accountCreated) {
+        this.name = name;
+        this.surname = surname;
+        this.accountCreated = accountCreated;
+    }
 }
