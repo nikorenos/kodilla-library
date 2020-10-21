@@ -1,7 +1,6 @@
 package com.crud.kodillalibrary.repository;
 
 import com.crud.kodillalibrary.domain.Title;
-import com.crud.kodillalibrary.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

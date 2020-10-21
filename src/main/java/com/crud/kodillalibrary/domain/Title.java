@@ -13,31 +13,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
-@Setter
-@Entity(name = "titles")
+@Entity(name = "TITLES")
 public class Title {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "bookTitle", unique = true)
     private String bookTitle;
-
-    @Column(name = "author")
     private String author;
-
-    @Column(name = "publicationYear")
     private int publicationYear;
-
-    @ManyToOne
-    @JoinColumn(name = "BOOK_ID")
-    private Book book;
-
+    List<Book> books = new ArrayList<>();
 
     public Title(String bookTitle, String author, int publicationYear) {
         this.bookTitle = bookTitle;
         this.author = author;
         this.publicationYear = publicationYear;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
+    @Column(name = "BOOK_TITLE", unique = true)
+    public String getBookTitle() {
+        return bookTitle;
+    }
+    @Column(name = "AUTHOR")
+    public String getAuthor() {
+        return author;
+    }
+
+    @Column(name = "PUBLICATION_YEAR")
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    @OneToMany(
+            targetEntity = Book.class,
+            mappedBy = "title",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Title{" +
+                //"id=" + id +
+                ", bookTitle='" + bookTitle + '\'' +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
+                //", booksList=" + booksList +
+                '}';
     }
 }

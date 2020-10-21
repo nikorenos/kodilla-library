@@ -12,13 +12,13 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     List<Book> findAll();
 
     @Override
-    Optional<Book> findById(Long BookId);
+    Optional<Book> findById(Long bookId);
 
     @Override
-    Book save(Book Book);
+    Book save(Book book);
 
     @Override
-    void deleteById(Long BookId);
+    void deleteById(Long bookId);
 
 }
 

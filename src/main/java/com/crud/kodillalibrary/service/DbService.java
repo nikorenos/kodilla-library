@@ -71,16 +71,16 @@ public class DbService {
     public Optional<Book> getBookById(final Long bookId) {
         return bookRepository.findById(bookId);
     }
-    public Book saveBook(final Book Book) {
-        return bookRepository.save(Book);
+    public Book saveBook(final Book book) {
+        return bookRepository.save(book);
     }
 
-    public Optional<Book> getBook(final Long BookId) {
-        return bookRepository.findById(BookId);
+    public Optional<Book> getBook(final Long bookId) {
+        return bookRepository.findById(bookId);
     }
 
-    public void deleteBookById(final Long BookId) {
-        bookRepository.deleteById(BookId);
+    public void deleteBookById(final Long bookId) {
+        bookRepository.deleteById(bookId);
     }
 }
 

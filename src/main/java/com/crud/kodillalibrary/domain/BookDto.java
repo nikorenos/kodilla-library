@@ -10,17 +10,9 @@ import javax.persistence.Id;
 
 
 public class BookDto {
-    private Long titleId;
     private String status;
 
 
-    public Long getTitleId() {
-        return titleId;
-    }
-
-    public void setTitleId(Long titleId) {
-        this.titleId = titleId;
-    }
 
     public String getStatus() {
         return status;
@@ -30,8 +22,7 @@ public class BookDto {
         this.status = status;
     }
 
-    public BookDto(Long titleId, String status) {
-        this.titleId = titleId;
+    public BookDto(String status) {
         this.status = status;
     }
 }
