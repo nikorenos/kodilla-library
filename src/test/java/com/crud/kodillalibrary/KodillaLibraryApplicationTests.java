@@ -13,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class KodillaLibraryApplicationTests {
@@ -90,6 +92,37 @@ public class KodillaLibraryApplicationTests {
 
         //CleanUp
         //service.deleteTitleById((long) id);
+    }
+
+    @Test
+    public void testHowManyFreeBook() {
+        //Given
+        LocalDate date1 = LocalDate.now();
+        LocalDate date2 = LocalDate.now().plusDays(7);
+        User user1 = new User("John","Smith",date1);
+        Title title1 = new Title("Book1", "Author 1", 1981);
+
+        Book book1 = new Book ("Borrowed");
+        Book book2 = new Book ("Free");
+        Book book3 = new Book ("Free");
+
+        title1.getBooks().add(book1);
+        title1.getBooks().add(book2);
+        title1.getBooks().add(book3);
+
+        book1.setTitle(title1);
+        book2.setTitle(title1);
+        book3.setTitle(title1);
+
+        List<Book> howManyFeeeBooks = title1.getBooks().stream()
+                .filter(t -> t.getStatus().equals("Free"))
+                .collect(Collectors.toList());
+
+        //Then
+        Assert.assertEquals(2,howManyFeeeBooks.size());
+
+        //CleanUp
+
     }
 
 }
