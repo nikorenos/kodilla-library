@@ -51,13 +51,13 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateUser")
-    public UserDto updateUser(@RequestBody UserDto UserDto) {
-        return userMapper.mapToUserDto(service.saveUser(userMapper.mapToUser(UserDto)));
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        return userMapper.mapToUserDto(service.saveUser(userMapper.mapToUser(userDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createUser", consumes = APPLICATION_JSON_VALUE)
-    public void createUser(@RequestBody UserDto UserDto) {
-        service.saveUser(userMapper.mapToUser(UserDto));
+    public void createUser(@RequestBody UserDto userDto) {
+        service.saveUser(userMapper.mapToUser(userDto));
     }
     
     //titles
@@ -67,32 +67,32 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitleById")
-    public TitleDto getTitleById(Long TitleId) throws TitleNotFoundException {
-        return titleMapper.mapToTitleDto(service.getTitleById(TitleId).orElseThrow(TitleNotFoundException::new));
+    public TitleDto getTitleById(Long titleId) throws TitleNotFoundException {
+        return titleMapper.mapToTitleDto(service.getTitleById(titleId).orElseThrow(TitleNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitle")
-    public TitleDto getTitle(@RequestParam Long TitleId) throws TitleNotFoundException {
-        return titleMapper.mapToTitleDto(service.getTitle(TitleId).orElseThrow(TitleNotFoundException::new));
+    public TitleDto getTitle(@RequestParam Long titleId) throws TitleNotFoundException {
+        return titleMapper.mapToTitleDto(service.getTitle(titleId).orElseThrow(TitleNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTitle")
-    public void deleteTitle(@RequestParam Long TitleId) throws TitleNotFoundException {
-        if (service.getTitle(TitleId).isPresent()) {
-            service.deleteTitleById(TitleId);
+    public void deleteTitle(@RequestParam Long titleId) throws TitleNotFoundException {
+        if (service.getTitle(titleId).isPresent()) {
+            service.deleteTitleById(titleId);
         } else {
             throw new TitleNotFoundException("Error with delete Title");
         }
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateTitle")
-    public TitleDto updateTitle(@RequestBody TitleDto TitleDto) {
-        return titleMapper.mapToTitleDto(service.saveTitle(titleMapper.mapToTitle(TitleDto)));
+    public TitleDto updateTitle(@RequestBody TitleDto titleDto) {
+        return titleMapper.mapToTitleDto(service.saveTitle(titleMapper.mapToTitle(titleDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createTitle", consumes = APPLICATION_JSON_VALUE)
-    public void createTitle(@RequestBody TitleDto TitleDto) {
-        service.saveTitle(titleMapper.mapToTitle(TitleDto));
+    public void createTitle(@RequestBody TitleDto titleDto) {
+        service.saveTitle(titleMapper.mapToTitle(titleDto));
     }
 
     //books
@@ -102,19 +102,19 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBookById")
-    public BookDto getBookById(Long BookId) throws BookNotFoundException {
-        return bookMapper.mapToBookDto(service.getBookById(BookId).orElseThrow(BookNotFoundException::new));
+    public BookDto getBookById(Long bookId) throws BookNotFoundException {
+        return bookMapper.mapToBookDto(service.getBookById(bookId).orElseThrow(BookNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBook")
-    public BookDto getBook(@RequestParam Long BookId) throws BookNotFoundException {
-        return bookMapper.mapToBookDto(service.getBook(BookId).orElseThrow(BookNotFoundException::new));
+    public BookDto getBook(@RequestParam Long bookId) throws BookNotFoundException {
+        return bookMapper.mapToBookDto(service.getBook(bookId).orElseThrow(BookNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteBook")
-    public void deleteBook(@RequestParam Long BookId) throws BookNotFoundException {
-        if (service.getBook(BookId).isPresent()) {
-            service.deleteBookById(BookId);
+    public void deleteBook(@RequestParam Long bookId) throws BookNotFoundException {
+        if (service.getBook(bookId).isPresent()) {
+            service.deleteBookById(bookId);
         } else {
             throw new BookNotFoundException("Error with delete Book");
         }
