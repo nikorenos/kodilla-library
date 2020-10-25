@@ -12,6 +12,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQueries({
+        @NamedQuery(
+                name = "Title.retrieveTitleWithName",
+                query = "FROM TITLES WHERE BOOK_TITLE = :name"
+                //SELECT * FROM books WHERE title_id=70 AND status='Free'
+        )
+})
+
+
 @NoArgsConstructor
 @Entity(name = "TITLES")
 public class Title {
@@ -28,7 +37,7 @@ public class Title {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }

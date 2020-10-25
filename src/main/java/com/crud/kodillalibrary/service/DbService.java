@@ -66,6 +66,9 @@ public class DbService {
     public void deleteTitleById(final Long titleId) {
         titleRepository.deleteById(titleId);
     }
+    public List<Title> retrieveTitlesWithName(String name) {
+        return titleRepository.retrieveTitleWithName(name);
+    }
 
     //Books
     public List<Book> getAllBooks() {
@@ -85,6 +88,10 @@ public class DbService {
 
     public void deleteBookById(final Long bookId) {
         bookRepository.deleteById(bookId);
+    }
+    public List<Book> retrieveFreeBooksWithTitleId(String name) {
+        Long titleId = titleRepository.retrieveTitleWithName(name).get(0).getId();
+        return bookRepository.retrieveFreeBooksWithTitleId(titleId);
     }
 
     //Borrows

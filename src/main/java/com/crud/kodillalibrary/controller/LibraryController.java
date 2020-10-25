@@ -56,7 +56,7 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createUser", consumes = APPLICATION_JSON_VALUE)
-    public void createUser(@RequestBody UserDto userDto) {
+        public void createUser(@RequestBody UserDto userDto) {
         service.saveUser(userMapper.mapToUser(userDto));
     }
     

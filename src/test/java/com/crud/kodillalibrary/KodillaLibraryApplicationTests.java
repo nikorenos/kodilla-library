@@ -4,6 +4,7 @@ import com.crud.kodillalibrary.domain.Book;
 import com.crud.kodillalibrary.domain.Borrow;
 import com.crud.kodillalibrary.domain.Title;
 import com.crud.kodillalibrary.domain.User;
+import com.crud.kodillalibrary.repository.TitleRepository;
 import com.crud.kodillalibrary.service.DbService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 public class KodillaLibraryApplicationTests {
     @Autowired
     private DbService service;
+    @Autowired
+    private TitleRepository titleRepository;
 
     @Test
     void contextLoads() {
@@ -121,8 +125,49 @@ public class KodillaLibraryApplicationTests {
         //Then
         Assert.assertEquals(2,howManyFeeeBooks.size());
 
+
         //CleanUp
 
+    }
+    @Test
+    public void testHowManyTitles() {
+        //Given
+        Title title1 = new Title("Ulysses", "Author 1", 1981);
+        //When
+        service.saveTitle(title1);
+        Long id = title1.getId();
+        //Then
+        String name = "Ulysses";
+        List<Title> searchedTitles = titleRepository.retrieveTitleWithName(name);
+        Assert.assertEquals(1,searchedTitles.size());
+        //CleanUp
+        service.deleteTitleById((long) id);
+    }
+    @Test
+    public void testHowManyFreeTitles() {
+        //Given
+        Title title1 = new Title("Ulysses", "Author 1", 1981);
+        Book book1 = new Book ("Borrowed");
+        Book book2 = new Book ("Free");
+        Book book3 = new Book ("Free");
+
+        title1.getBooks().add(book1);
+        title1.getBooks().add(book2);
+        title1.getBooks().add(book3);
+
+        book1.setTitle(title1);
+        book2.setTitle(title1);
+        book3.setTitle(title1);
+
+        //When
+        service.saveTitle(title1);
+        Long id = title1.getId();
+        String name = "Ulysses";
+        List<Book> searchedBooks = service.retrieveFreeBooksWithTitleId(name);
+        Assert.assertEquals(2,searchedBooks.size());
+
+        //CleanUp
+        service.deleteTitleById((long) id);
     }
 
 }

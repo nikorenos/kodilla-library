@@ -4,7 +4,13 @@ package com.crud.kodillalibrary.domain;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
-
+@NamedQueries({
+        @NamedQuery(
+                name = "Book.retrieveFreeBooksWithTitleId",
+                query = "FROM BOOKS WHERE STATUS = 'Free' AND TITLE_ID = :titleId"
+                //SELECT * FROM books WHERE title_id=70 AND status='Free'
+        )
+})
 
 @NoArgsConstructor
 @Entity(name = "BOOKS")
@@ -18,7 +24,7 @@ public class Book {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
