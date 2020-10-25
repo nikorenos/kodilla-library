@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity(name = "BORROWS")
@@ -14,7 +16,7 @@ public class Borrow {
     private LocalDate startBorrow;
     private LocalDate endBorrow;
     private User user;
-    private Book book;
+    List<Book> books = new ArrayList<>();
 
     public Borrow(LocalDate startBorrow, LocalDate endBorrow) {
         this.startBorrow = startBorrow;
@@ -36,21 +38,26 @@ public class Borrow {
         return endBorrow;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     public User getUser() {
         return user;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "BOOK_ID")
-    public Book getBook() {
-        return book;
+    @OneToMany(
+            targetEntity = Book.class,
+            mappedBy = "title",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
+
     public void setUser(User user) {
         this.user = user;
     }

@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -25,6 +27,14 @@ public class User {
 
     @Column(name = "accountCreated")
     private LocalDate accountCreated;
+
+    @OneToMany(
+            targetEntity = Borrow.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    List<Borrow> borrows = new ArrayList<>();
 
     public User(String name, String surname, LocalDate accountCreated) {
         this.name = name;

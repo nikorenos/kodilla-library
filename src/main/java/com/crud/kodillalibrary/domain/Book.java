@@ -18,6 +18,7 @@ public class Book {
     private Long id;
     private String status;
     private Title title;
+    private Borrow borrow;
 
     public Book(String status) {
         this.status = status;
@@ -28,7 +29,7 @@ public class Book {
     public Long getId() {
         return id;
     }
-    @Column(name = "status")
+    @Column(name = "STATUS")
     public String getStatus() {
         return status;
     }
@@ -37,6 +38,16 @@ public class Book {
     @JoinColumn(name = "TITLE_ID")
     public Title getTitle() {
         return title;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "BORROW_ID")
+    public Borrow getBorrow() {
+        return borrow;
+    }
+
+    public void setBorrow(Borrow borrow) {
+        this.borrow = borrow;
     }
 
     public void setTitle(Title title) {

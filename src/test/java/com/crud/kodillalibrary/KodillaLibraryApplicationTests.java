@@ -67,8 +67,11 @@ public class KodillaLibraryApplicationTests {
         book2.setTitle(title1);
 
         Borrow borrow1 = new Borrow(date1, date2);
-        borrow1.setBook(new Book("Free"));
-        borrow1.getBook().setTitle(title1);
+        borrow1.getBooks().add(book1);
+        borrow1.getBooks().add(book2);
+
+        book1.setBorrow(borrow1);
+        book2.setBorrow(borrow1);
         borrow1.setUser(new User("Henry","Cavil",date1));
 
 
@@ -89,13 +92,13 @@ public class KodillaLibraryApplicationTests {
 
         //service.saveBook(book1);
         //service.saveBook(book2);
-        //Long id = title1.getId();
+        Long id = title1.getId();
 
         //Then
         Assert.assertNotEquals(0,1);
 
         //CleanUp
-        //service.deleteTitleById((long) id);
+        service.deleteTitleById((long) id);
     }
 
     @Test
