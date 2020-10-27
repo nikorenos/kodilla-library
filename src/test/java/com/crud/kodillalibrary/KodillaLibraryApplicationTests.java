@@ -70,35 +70,22 @@ public class KodillaLibraryApplicationTests {
         borrow1.getBooks().add(book1);
         borrow1.getBooks().add(book2);
 
-        book1.setBorrow(borrow1);
-        book2.setBorrow(borrow1);
+        //book1.setBorrow(borrow1);
+        //book2.setBorrow(borrow1);
         borrow1.setUser(new User("Henry","Cavil",date1));
-
-
-        //System.out.println(title1);
-
-        /*Invoice invoice = new Invoice("0001");
-        invoice.getItems().add(item1);
-        invoice.getItems().add(item2);
-        invoice.getItems().add(item3);
-
-        item1.setInvoice(invoice);
-        item2.setInvoice(invoice);
-        item3.setInvoice(invoice);*/
 
         //When
         service.saveTitle(title1);
-        service.saveBorrow(borrow1);
-
-        //service.saveBook(book1);
-        //service.saveBook(book2);
-        Long id = title1.getId();
+        //service.saveBorrow(borrow1);
+        Long titleId = title1.getId();
+        Long borrowId = borrow1.getId();
 
         //Then
-        Assert.assertNotEquals(0,1);
+        //Assert.assertNotEquals(0,1);
 
         //CleanUp
-        service.deleteTitleById((long) id);
+        service.deleteTitleById(titleId);
+        //service.deleteBorrowById(borrowId);
     }
 
     @Test
