@@ -19,13 +19,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "surname")
+    @Column(name = "SURNAME")
     private String surname;
 
-    @Column(name = "accountCreated")
+    @Column(name = "ACCOUNT_CREATED")
     private LocalDate accountCreated;
 
     @OneToMany(
